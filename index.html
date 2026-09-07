@@ -9,14 +9,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --green: #6bbf4e;
-            --dark-green: #3d6b32;
-            --pink: #ff8fab;
-            --soft-pink: #ffb3c1;
-            --gold: #ffd166;
-            --card: rgba(30, 42, 35, 0.85);
-            --text: #f3efe6;
-            --text-muted: #a8b89a;
+            --mc-green: #5d9c3e;
+            --mc-dark: #3a6b2a;
+            --mc-dirt: #8b6b4a;
+            --mc-stone: #7a7a7a;
+            --mc-gold: #ffd83d;
+            --mc-pink: #ff7a9c;
+            --mc-soft-pink: #ffb0c4;
+            --panel: #2b3a28;
+            --panel-border: #1a2418;
+            --text: #f0e6d0;
+            --text-dim: #a8b89a;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -24,267 +27,357 @@
         body {
             font-family: 'Quicksand', sans-serif;
             background: 
-                radial-gradient(ellipse at 20% 15%, rgba(107, 191, 78, 0.09) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 85%, rgba(255, 143, 171, 0.08) 0%, transparent 50%),
-                linear-gradient(165deg, #0b1015 0%, #142019 45%, #1a2a1f 100%);
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 31px,
+                    rgba(0,0,0,0.03) 32px
+                ),
+                linear-gradient(180deg, #0d1a12 0%, #1a2e1f 40%, #243a28 100%);
             color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
-            position: relative;
+            image-rendering: pixelated;
+        }
+
+        /* Pixel grid overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+            background-size: 16px 16px;
+            pointer-events: none;
+            z-index: 0;
         }
 
         .stars {
             position: fixed; inset: 0; pointer-events: none; z-index: 0;
             background-image: 
-                radial-gradient(1.5px 1.5px at 10% 20%, #fff, transparent),
-                radial-gradient(1.5px 1.5px at 30% 60%, rgba(255,255,255,0.7), transparent),
-                radial-gradient(1px 1px at 50% 30%, #fff, transparent),
-                radial-gradient(1.5px 1.5px at 70% 80%, rgba(255,255,255,0.6), transparent),
-                radial-gradient(1px 1px at 90% 40%, #fff, transparent),
-                radial-gradient(1.5px 1.5px at 15% 75%, rgba(255,255,255,0.5), transparent);
-            background-size: 280px 280px;
-            opacity: 0.4;
-            animation: twinkle 9s ease-in-out infinite alternate;
+                radial-gradient(2px 2px at 12% 18%, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 28% 55%, rgba(255,255,255,0.7), transparent),
+                radial-gradient(2px 2px at 55% 25%, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 72% 78%, rgba(255,255,255,0.6), transparent),
+                radial-gradient(2px 2px at 88% 35%, #fff, transparent);
+            background-size: 260px 260px;
+            opacity: 0.35;
         }
-        @keyframes twinkle { from { opacity: 0.3; } to { opacity: 0.5; } }
 
         .floating-hearts {
             position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
         }
         .floating-hearts span {
-            position: absolute; font-size: 13px; opacity: 0.22;
-            animation: rise 13s linear infinite;
+            position: absolute; font-size: 12px; opacity: 0.2;
+            animation: rise 14s linear infinite;
+            image-rendering: pixelated;
         }
         @keyframes rise {
             0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
-            15% { opacity: 0.25; }
-            85% { opacity: 0.18; }
-            100% { transform: translateY(-5vh) scale(1.1); opacity: 0; }
+            20% { opacity: 0.25; }
+            80% { opacity: 0.15; }
+            100% { transform: translateY(-5vh) scale(1); opacity: 0; }
         }
 
         .container {
-            max-width: 780px;
+            max-width: 760px;
             margin: 0 auto;
-            padding: 22px 16px 50px;
+            padding: 20px 14px 45px;
             position: relative;
             z-index: 1;
         }
 
-        header { text-align: center; padding: 28px 8px 8px; }
+        /* ===== HEADER ===== */
+        header {
+            text-align: center;
+            padding: 24px 6px 6px;
+        }
 
         h1 {
             font-family: 'Press Start 2P', cursive;
-            font-size: clamp(0.95rem, 4vw, 1.45rem);
-            color: var(--gold);
-            text-shadow: 3px 3px 0 #2a1f05, 0 0 22px rgba(255, 209, 102, 0.3);
-            line-height: 1.55;
+            font-size: clamp(0.9rem, 3.8vw, 1.35rem);
+            color: var(--mc-gold);
+            text-shadow: 
+                4px 4px 0 #2a1c00,
+                -1px -1px 0 #000,
+                1px -1px 0 #000,
+                -1px 1px 0 #000;
+            line-height: 1.6;
             margin-bottom: 10px;
+            letter-spacing: 1px;
         }
 
         .subtitle {
-            font-size: 1.02rem;
-            color: var(--soft-pink);
-            font-weight: 500;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.55rem;
+            color: var(--mc-soft-pink);
+            line-height: 1.6;
         }
 
-        /* OGÓRCZAK */
+        /* ===== OGÓRCZAK ===== */
         .ogorczak-box {
-            display: flex; justify-content: center; align-items: flex-end;
-            height: 220px; margin: 22px 0 18px; position: relative;
-        }
-        .ogorczak {
-            width: 120px; height: auto;
-            image-rendering: pixelated;
-            filter: drop-shadow(0 10px 16px rgba(0,0,0,0.45));
-            animation: idle 2.5s ease-in-out infinite;
-            cursor: pointer; z-index: 2;
-        }
-        .ogorczak:hover { filter: drop-shadow(0 10px 20px rgba(107, 191, 78, 0.4)); }
-        @keyframes idle {
-            0%, 100% { transform: translateY(0) rotate(-1.2deg); }
-            50% { transform: translateY(-14px) rotate(1.2deg); }
-        }
-        .click-hearts {
-            position: absolute; top: 28%; left: 50%;
-            transform: translateX(-50%); pointer-events: none; z-index: 3;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            height: 210px;
+            margin: 20px 0 14px;
+            position: relative;
         }
 
-        /* GŁÓWNE ZDJĘCIE */
+        .ogorczak {
+            width: 115px;
+            height: auto;
+            image-rendering: pixelated;
+            filter: drop-shadow(4px 6px 0 rgba(0,0,0,0.5));
+            animation: idle 2.2s steps(4) infinite;
+            cursor: pointer;
+            z-index: 2;
+        }
+        .ogorczak:hover {
+            filter: drop-shadow(4px 6px 0 rgba(93, 156, 62, 0.6));
+        }
+
+        @keyframes idle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .click-hearts {
+            position: absolute;
+            top: 25%;
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        /* ===== GŁÓWNE ZDJĘCIE ===== */
         .main-photo-wrap {
-            margin: 10px 0 28px;
+            margin: 8px 0 24px;
             text-align: center;
         }
+
         .main-photo {
             width: 100%;
-            max-width: 420px;
-            border-radius: 18px;
-            border: 4px solid var(--green);
+            max-width: 380px;
+            border: 6px solid #3a2a1a;
+            border-image: none;
             box-shadow: 
-                0 0 0 6px rgba(107, 191, 78, 0.18),
-                0 18px 40px rgba(0,0,0,0.4),
-                0 0 30px rgba(255, 143, 171, 0.12);
+                inset 0 0 0 3px var(--mc-green),
+                6px 6px 0 #1a1208,
+                0 0 0 2px #000;
             display: block;
             margin: 0 auto;
             object-fit: cover;
             aspect-ratio: 3/4;
-        }
-        .photo-caption {
-            margin-top: 12px;
-            font-size: 0.9rem;
-            color: var(--soft-pink);
-            font-weight: 500;
+            image-rendering: auto;
         }
 
-        /* LICZNIK */
-        .counter-card {
-            background: var(--card);
-            border: 3px solid var(--green);
-            border-radius: 16px;
-            padding: 26px 16px;
-            margin: 26px 0;
-            text-align: center;
-            box-shadow: 0 0 0 5px rgba(107, 191, 78, 0.12), 0 14px 36px rgba(0,0,0,0.32);
-            backdrop-filter: blur(6px);
+        .photo-caption {
+            margin-top: 10px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.55rem;
+            color: var(--mc-soft-pink);
         }
+
+        /* ===== LICZNIK ===== */
+        .counter-card {
+            background: var(--panel);
+            border: 4px solid #1a2418;
+            box-shadow: 
+                inset 0 0 0 3px var(--mc-green),
+                5px 5px 0 #0d140c;
+            padding: 22px 12px;
+            margin: 22px 0;
+            text-align: center;
+        }
+
         .counter-label {
             font-family: 'Press Start 2P', cursive;
-            font-size: 0.65rem;
-            color: var(--soft-pink);
-            margin-bottom: 20px;
-            letter-spacing: 1px;
+            font-size: 0.58rem;
+            color: var(--mc-soft-pink);
+            margin-bottom: 18px;
+            line-height: 1.5;
         }
+
         .counter-grid {
-            display: flex; justify-content: center; flex-wrap: wrap; gap: 9px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
         }
+
         .time-unit {
-            background: linear-gradient(160deg, #243528, #1a251c);
-            border: 2px solid var(--dark-green);
-            border-radius: 10px;
-            padding: 12px 7px;
-            min-width: 68px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+            background: #1e2a1c;
+            border: 3px solid #0f160e;
+            box-shadow: inset 2px 2px 0 #000, 2px 2px 0 var(--mc-dark);
+            padding: 10px 6px;
+            min-width: 64px;
         }
+
         .time-number {
             font-family: 'Press Start 2P', cursive;
-            font-size: 1.15rem;
-            color: var(--gold);
+            font-size: 1.05rem;
+            color: var(--mc-gold);
             display: block;
-            text-shadow: 0 0 10px rgba(255, 209, 102, 0.25);
+            text-shadow: 2px 2px 0 #000;
         }
+
         .time-name {
-            font-size: 0.7rem;
-            color: var(--text-muted);
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.42rem;
+            color: var(--text-dim);
             margin-top: 6px;
             text-transform: uppercase;
         }
 
-        /* SEKCJE */
+        /* ===== SEKCJE ===== */
         section {
-            background: var(--card);
-            border: 2px solid var(--dark-green);
-            border-radius: 16px;
-            padding: 24px 20px;
-            margin: 22px 0;
-            box-shadow: 0 10px 28px rgba(0,0,0,0.25);
-            backdrop-filter: blur(6px);
+            background: var(--panel);
+            border: 4px solid #1a2418;
+            box-shadow: 
+                inset 0 0 0 3px var(--mc-dark),
+                5px 5px 0 #0d140c;
+            padding: 20px 16px;
+            margin: 20px 0;
         }
+
         h2 {
             font-family: 'Press Start 2P', cursive;
-            font-size: 0.78rem;
-            color: var(--gold);
-            margin-bottom: 16px;
-            display: flex; align-items: center; gap: 9px;
+            font-size: 0.7rem;
+            color: var(--mc-gold);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-shadow: 2px 2px 0 #000;
+            line-height: 1.5;
         }
-        h2::before { content: '💚'; font-size: 1rem; }
+        h2::before {
+            content: '❤';
+            color: var(--mc-pink);
+            font-size: 0.9rem;
+            text-shadow: none;
+        }
 
         .story {
-            line-height: 1.78;
-            font-size: 1.02rem;
-            color: #e9e3d8;
+            line-height: 1.75;
+            font-size: 1rem;
+            color: #e8dfd0;
         }
-        .story p { margin-bottom: 15px; }
+        .story p { margin-bottom: 13px; }
         .story .highlight {
-            color: var(--soft-pink);
-            font-weight: 600;
+            color: var(--mc-soft-pink);
+            font-weight: 700;
         }
         .story .ending {
-            margin-top: 18px;
-            color: var(--gold);
+            margin-top: 16px;
+            color: var(--mc-gold);
             font-weight: 600;
         }
 
-        /* TIMELINE */
-        .timeline { position: relative; padding-left: 26px; }
+        /* ===== TIMELINE ===== */
+        .timeline {
+            position: relative;
+            padding-left: 24px;
+        }
         .timeline::before {
             content: '';
-            position: absolute; left: 5px; top: 4px; bottom: 4px;
-            width: 3px;
-            background: linear-gradient(to bottom, var(--green), var(--pink));
-            border-radius: 3px;
+            position: absolute;
+            left: 4px;
+            top: 2px;
+            bottom: 2px;
+            width: 4px;
+            background: var(--mc-green);
+            box-shadow: 2px 0 0 #1a2418;
         }
         .t-item {
-            position: relative; margin-bottom: 20px; padding-left: 16px;
+            position: relative;
+            margin-bottom: 18px;
+            padding-left: 14px;
         }
         .t-item:last-child { margin-bottom: 0; }
         .t-item::before {
             content: '';
-            position: absolute; left: -25px; top: 4px;
-            width: 12px; height: 12px;
-            background: var(--gold);
-            border: 3px solid var(--green);
-            border-radius: 3px;
-            box-shadow: 0 0 8px rgba(255, 209, 102, 0.4);
+            position: absolute;
+            left: -24px;
+            top: 3px;
+            width: 12px;
+            height: 12px;
+            background: var(--mc-gold);
+            border: 3px solid #1a2418;
+            box-shadow: 2px 2px 0 #000;
         }
         .t-date {
             font-family: 'Press Start 2P', cursive;
-            font-size: 0.55rem;
-            color: var(--pink);
+            font-size: 0.5rem;
+            color: var(--mc-pink);
             margin-bottom: 4px;
+            line-height: 1.4;
         }
-        .t-text { font-size: 0.98rem; color: #ddd5c8; }
+        .t-text {
+            font-size: 0.95rem;
+            color: #d8d0c0;
+        }
 
-        /* GALERIA */
+        /* ===== GALERIA ===== */
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
             gap: 12px;
         }
         .g-item {
             aspect-ratio: 1;
-            background: linear-gradient(145deg, #243528, #1a251c);
-            border: 3px solid var(--dark-green);
-            border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            text-align: center; padding: 10px;
-            transition: all 0.3s ease;
+            background: #1e2a1c;
+            border: 4px solid #1a2418;
+            box-shadow: inset 0 0 0 2px var(--mc-dark), 3px 3px 0 #0d140c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dim);
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.45rem;
+            text-align: center;
+            padding: 8px;
+            line-height: 1.5;
+            transition: none;
             overflow: hidden;
         }
         .g-item:hover {
-            border-color: var(--pink);
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(255, 143, 171, 0.18);
+            border-color: var(--mc-pink);
+            box-shadow: inset 0 0 0 2px var(--mc-pink), 3px 3px 0 #0d140c;
         }
-        .g-item img { width: 100%; height: 100%; object-fit: cover; }
+        .g-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
         .hint {
-            margin-top: 14px; font-size: 0.82rem;
-            color: var(--text-muted); line-height: 1.5;
+            margin-top: 12px;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            line-height: 1.5;
         }
 
         footer {
-            text-align: center; padding: 28px 12px 8px;
-            font-size: 0.88rem; color: var(--text-muted);
+            text-align: center;
+            padding: 24px 10px 6px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.48rem;
+            color: var(--text-dim);
+            line-height: 1.7;
         }
-        footer .heart { color: var(--pink); }
+        footer .heart { color: var(--mc-pink); }
 
-        @media (max-width: 560px) {
-            .time-unit { min-width: 58px; padding: 10px 5px; }
-            .time-number { font-size: 1rem; }
-            .ogorczak { width: 100px; }
-            .ogorczak-box { height: 190px; }
+        @media (max-width: 540px) {
+            .time-unit { min-width: 56px; padding: 8px 4px; }
+            .time-number { font-size: 0.9rem; }
+            .ogorczak { width: 95px; }
+            .ogorczak-box { height: 180px; }
             .main-photo { max-width: 100%; }
-            section { padding: 18px 14px; }
+            section { padding: 16px 12px; }
+            h2 { font-size: 0.6rem; }
         }
     </style>
 </head>
@@ -295,7 +388,7 @@
     <div class="container">
         <header>
             <h1>Ogórczak & My<br>– Nasza Historia</h1>
-            <p class="subtitle">od 14 lipca 2026 • Survival Mode: Love</p>
+            <p class="subtitle">od 14 czerwca 2026<br>Survival Mode: Love</p>
 
             <div class="ogorczak-box">
                 <img src="ogorczak.jpg" alt="Ogórczak" class="ogorczak" id="ogorczak" title="Kliknij mnie!">
@@ -319,7 +412,7 @@
                 </div>
                 <div class="time-unit">
                     <span class="time-number" id="months">0</span>
-                    <div class="time-name">mies.</div>
+                    <div class="time-name">mies</div>
                 </div>
                 <div class="time-unit">
                     <span class="time-number" id="days">0</span>
@@ -405,25 +498,26 @@
         <section>
             <h2>Nasze Wspomnienia</h2>
             <div class="gallery">
-                <div class="g-item"><span>Dodaj<br>zdjęcie</span></div>
-                <div class="g-item"><span>Dodaj<br>zdjęcie</span></div>
-                <div class="g-item"><span>Dodaj<br>zdjęcie</span></div>
-                <div class="g-item"><span>Dodaj<br>zdjęcie</span></div>
+                <div class="g-item">Dodaj<br>zdjęcie</div>
+                <div class="g-item">Dodaj<br>zdjęcie</div>
+                <div class="g-item">Dodaj<br>zdjęcie</div>
+                <div class="g-item">Dodaj<br>zdjęcie</div>
             </div>
             <p class="hint">
-                Żeby dodać zdjęcie: wrzuć plik do repozytorium i zamień tekst w kodzie na<br>
-                <code style="color:var(--gold);font-size:0.78rem;">&lt;img src="nazwa.jpg" alt="opis"&gt;</code>
+                Żeby dodać zdjęcie: wrzuć plik do repozytorium i zamień tekst na<br>
+                <code style="color:var(--mc-gold);font-size:0.75rem;">&lt;img src="nazwa.jpg" alt="opis"&gt;</code>
             </p>
         </section>
 
         <footer>
-            <p>Zrobione z <span class="heart">❤️</span> dla Marcina i Ogórczaka</p>
-            <p style="margin-top: 5px; font-size: 0.78rem;">Survival Mode: Love • od 14 lipca 2026</p>
+            <p>Zrobione z <span class="heart">❤</span> dla Marcina<br>i Ogórczaka</p>
+            <p style="margin-top: 8px;">Survival Mode: Love</p>
         </footer>
     </div>
 
     <script>
-        const startDate = new Date('2026-07-14T00:00:00');
+        // Licznik od 14 czerwca 2026
+        const startDate = new Date('2026-06-14T00:00:00');
 
         function updateCounter() {
             const now = new Date();
@@ -462,36 +556,38 @@
         updateCounter();
         setInterval(updateCounter, 1000);
 
+        // Kliknięcie w Ogórczaka
         const ogorczak = document.getElementById('ogorczak');
         const clickHearts = document.getElementById('clickHearts');
 
         ogorczak.addEventListener('click', () => {
             ogorczak.style.animation = 'none';
             void ogorczak.offsetWidth;
-            ogorczak.style.animation = 'idle 0.35s ease-in-out 2';
+            ogorczak.style.animation = 'idle 0.3s steps(2) 3';
 
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < 6; i++) {
                 const heart = document.createElement('span');
                 heart.textContent = ['💚','❤️','💗'][Math.floor(Math.random()*3)];
                 heart.style.position = 'absolute';
-                heart.style.left = (Math.random() * 70 - 35) + 'px';
-                heart.style.fontSize = (15 + Math.random() * 12) + 'px';
+                heart.style.left = (Math.random() * 60 - 30) + 'px';
+                heart.style.fontSize = (14 + Math.random() * 10) + 'px';
                 heart.style.opacity = '1';
-                heart.style.transition = 'all 1.1s ease-out';
+                heart.style.transition = 'all 1s steps(6)';
                 clickHearts.appendChild(heart);
 
                 setTimeout(() => {
-                    heart.style.transform = `translateY(-75px) scale(1.35)`;
+                    heart.style.transform = `translateY(-70px) scale(1.3)`;
                     heart.style.opacity = '0';
-                }, 20);
-                setTimeout(() => heart.remove(), 1200);
+                }, 30);
+                setTimeout(() => heart.remove(), 1100);
             }
 
             setTimeout(() => {
-                ogorczak.style.animation = 'idle 2.5s ease-in-out infinite';
-            }, 750);
+                ogorczak.style.animation = 'idle 2.2s steps(4) infinite';
+            }, 700);
         });
 
+        // Serduszka w tle
         const heartsContainer = document.getElementById('hearts');
         const heartSymbols = ['💚', '❤️', '🤍'];
 
@@ -499,14 +595,14 @@
             const heart = document.createElement('span');
             heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
             heart.style.left = Math.random() * 100 + '%';
-            heart.style.animationDuration = (10 + Math.random() * 7) + 's';
-            heart.style.fontSize = (11 + Math.random() * 9) + 'px';
+            heart.style.animationDuration = (11 + Math.random() * 6) + 's';
+            heart.style.fontSize = (10 + Math.random() * 8) + 'px';
             heartsContainer.appendChild(heart);
             setTimeout(() => heart.remove(), 18000);
         }
 
-        setInterval(spawnHeart, 2000);
-        for (let i = 0; i < 5; i++) setTimeout(spawnHeart, i * 500);
+        setInterval(spawnHeart, 2200);
+        for (let i = 0; i < 4; i++) setTimeout(spawnHeart, i * 600);
     </script>
 </body>
 </html>
